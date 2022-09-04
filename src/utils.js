@@ -1,54 +1,61 @@
+/**
+ * Check donate value for positive, non-zero value
+ * @param {*} donate Donate value, [number]
+ * @returns True is donate is validated, false otherwise
+ */
+export function isValidate(donate) {
+  return donate > 0;
+}
 
 /**
- * Calculate donate sum 
+ * Calculate donate sum
  * @returns Donate sum
  */
 export function getActualDonateSum() {
   let sum = 0;
-  document.querySelectorAll('.donate-item').forEach((item) => {
-    const separatorIndex = item.textContent.indexOf('-');
+  document.querySelectorAll(".donate-item").forEach((item) => {
+    const separatorIndex = item.textContent.indexOf("-");
     let value = item.textContent.slice(separatorIndex + 1).trim();
-    value = value.replace('$', '');
+    value = value.replace("$", "");
     sum += Number(value);
-  })
+  });
   return sum;
 }
 
-
 /**
- * Add new donate to donates list 
+ * Add new donate to donates list
  * @param {*} donate Donate value
  */
 export function addDonateToList(donate) {
-  const donatesListHTML = document.querySelector('.donates-container__donates');
+  const donatesListHTML = document.querySelector(".donates-container__donates");
 
-  const donateDiv = document.createElement('div');
-  donateDiv.className = 'donate-item';
- 
+  const donateDiv = document.createElement("div");
+  donateDiv.className = "donate-item";
+
   const nowDate = new Date();
-  const donateVal = document.createElement('b');
-  donateVal.textContent = String(donate) + '$';
+  const donateVal = document.createElement("b");
+  donateVal.textContent = String(donate) + "$";
 
-  donateDiv.textContent = formatDate(nowDate) + ' - ';
+  donateDiv.textContent = formatDate(nowDate) + " - ";
   donateDiv.append(donateVal);
 
-  donatesListHTML?.insertAdjacentElement('afterbegin', donateDiv);
+  donatesListHTML?.insertAdjacentElement("afterbegin", donateDiv);
 }
 
 const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 /**
  * COnvert date and time to format 'July 6th 2021, 10:28:49 am'
@@ -56,27 +63,27 @@ const MONTHS = [
  * @returns String with formatted date and time
  */
 function formatDate(date) {
-  let res = '';
-  res += MONTHS[date.getMonth()] + ' ';
+  let res = "";
+  res += MONTHS[date.getMonth()] + " ";
 
   let day = date.getDate();
-  let dayPostfix = '';
+  let dayPostfix = "";
   switch (day) {
     case 1:
-        dayPostfix = 'st';
-        break;
+      dayPostfix = "st";
+      break;
     case 2:
-        dayPostfix = 'nd';
-        break;
+      dayPostfix = "nd";
+      break;
     case 3:
-        dayPostfix = 'rd';
-        break;
+      dayPostfix = "rd";
+      break;
     default:
-        dayPostfix = 'th';
-        break;
+      dayPostfix = "th";
+      break;
   }
-  res += String(day) + dayPostfix + ' ';
-  res += date.getFullYear() + ', ';
+  res += String(day) + dayPostfix + " ";
+  res += date.getFullYear() + ", ";
   res += getTimeInAmPm(date);
 
   return res;
@@ -88,14 +95,14 @@ function formatDate(date) {
  * @returns String with formatted time
  */
 function getTimeInAmPm(date) {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    const amPm = hours >= 12 ? 'pm' : 'am';
-    let seconds = date.getSeconds(); 
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    minutes = minutes.toString().padStart(2, '0');
-    seconds = seconds.toString().padStart(2, '0');
-    const strTime = `${hours}:${minutes}:${seconds} ${amPm}`;
-    return strTime;
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  const amPm = hours >= 12 ? "pm" : "am";
+  let seconds = date.getSeconds();
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes.toString().padStart(2, "0");
+  seconds = seconds.toString().padStart(2, "0");
+  const strTime = `${hours}:${minutes}:${seconds} ${amPm}`;
+  return strTime;
 }
